@@ -14,6 +14,11 @@ export const Home: React.FC = () => {
             <p className="text-base md:text-lg">Linkedin</p>
           </a>
         </section>
+        <section className="mb-4 w-full cursor-pointer rounded-lg bg-white py-2 transition-transform select-none hover:scale-105">
+          <a>
+            <p className="text-base md:text-lg">Github</p>
+          </a>
+        </section>
         <footer className="my-4 flex justify-center gap-3">
           <Social url="https://www.linkedin.com/in/gabriel-moura-b63382161/">
             <FaLinkedin size={35} color="#fff" />
