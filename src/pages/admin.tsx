@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, useEffect } from "react";
 import { Header } from "../componets/header";
 import { Input } from "../componets/input";
 import { FiTrash } from "react-icons/fi";
@@ -13,11 +13,46 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 
+interface LinkProps {
+  id: string;
+  name: string;
+  url: string;
+  bg: string;
+  color: string;
+}
+
 export const Admin: React.FC = () => {
   const [name, setName] = useState("");
   const [url, setUrl] = useState("");
   const [textColor, setTextColor] = useState("#f1f1f1");
   const [bgColor, setBgColor] = useState("#121212");
+  const [links, setLinks] = useState<LinkProps[]>([]);
+
+  useEffect(() => {
+    // referencia a collection 'links'
+    const linksRef = collection(db, "links");
+    // faz uma busca personalizada no banco dentro da referencia passada
+    const queryRef = query(linksRef, orderBy("created", "asc"));
+    // busca os dados em tempo real --- snapshot é o retorno do banco
+    const unsub = onSnapshot(queryRef, (snapshot) => {
+      const list = [] as LinkProps[];
+
+      // passa por todos os docs da collection
+      snapshot.forEach((doc) => {
+        list.push({
+          id: doc.id,
+          name: doc.data().name,
+          url: doc.data().url,
+          bg: doc.data().bg,
+          color: doc.data().color,
+        });
+      });
+
+      setLinks(list);
+    });
+
+    return () => unsub();
+  }, []);
 
   const handleRegister = async (e: FormEvent) => {
     e.preventDefault();
