@@ -76,6 +76,16 @@ export const Admin: React.FC = () => {
     }
   };
 
+  const handleDelete = async (docID: string) => {
+    const docRef = doc(db, "links", docID);
+
+    try {
+      await deleteDoc(docRef);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="flex min-h-screen flex-col items-center px-2 pb-7">
       <Header />
@@ -141,17 +151,23 @@ export const Admin: React.FC = () => {
         </button>
       </form>
       <h2 className="mb-7 text-2xl font-bold text-white">Meus Links</h2>
-      <article
-        className="mb-2 flex w-11/12 max-w-xl items-center justify-between rounded-md px-2 py-3 select-none"
-        style={{ backgroundColor: "#135DFB", color: "#fff" }}
-      >
-        <p>Canal do youtube</p>
-        <div>
-          <button className="cursor-pointer rounded border border-dashed bg-neutral-700 px-2 py-1">
-            <FiTrash size={18} color="#fff" />
-          </button>
-        </div>
-      </article>
+      {links.map((item) => (
+        <article
+          key={item.id}
+          className="mb-2 flex w-11/12 max-w-xl items-center justify-between rounded-md px-2 py-3 select-none"
+          style={{ backgroundColor: item.bg, color: item.color }}
+        >
+          <p>{item.name}</p>
+          <div>
+            <button
+              className="cursor-pointer rounded border border-dashed bg-neutral-700 px-2 py-1"
+              onClick={() => handleDelete(item.id)}
+            >
+              <FiTrash size={18} color="#fff" />
+            </button>
+          </div>
+        </article>
+      ))}
     </div>
   );
 };
