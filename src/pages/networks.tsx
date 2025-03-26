@@ -2,7 +2,7 @@ import { FormEvent, useState, useEffect } from "react";
 import { Header } from "../componets/header";
 import { Input } from "../componets/input";
 import { db } from "../services/firebase-connection";
-import { setDoc, addDoc, getDoc, doc } from "firebase/firestore";
+import { setDoc, getDoc, doc } from "firebase/firestore";
 
 export const Networks = () => {
   const [facebook, setFacebook] = useState("");
@@ -33,6 +33,7 @@ export const Networks = () => {
 
     try {
       // 'social' é a collection, 'link' é o nome do doc
+      // também poderia usar a abordagem de addDoc
       await setDoc(doc(db, "social", "link"), {
         facebook: facebook,
         instagram: instagram,
