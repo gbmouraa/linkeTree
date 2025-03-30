@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Input } from "../componets/input";
+import { Input } from "../components/input";
 import { FormEvent, useState } from "react";
 import { auth } from "../services/firebase-connection";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -10,7 +10,7 @@ export const Login: React.FC = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (event: FormEvent) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
     if (email.trim() === "" || password.trim() === "") {
@@ -19,10 +19,9 @@ export const Login: React.FC = () => {
     }
 
     try {
-      signInWithEmailAndPassword(auth, email, password).then(() => {
-        // replace substitui o histórico de navegação
-        navigate("/admin", { replace: true });
-      });
+      await signInWithEmailAndPassword(auth, email, password);
+      // replace substitui o histórico de navegação
+      navigate("/admin", { replace: true });
     } catch (error) {
       console.log(error);
     }

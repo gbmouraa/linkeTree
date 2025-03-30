@@ -1,6 +1,6 @@
 import { FormEvent, useState, useEffect } from "react";
-import { Header } from "../componets/header";
-import { Input } from "../componets/input";
+import { Header } from "../components/header";
+import { Input } from "../components/input";
 import { db } from "../services/firebase-connection";
 import { setDoc, getDoc, doc } from "firebase/firestore";
 

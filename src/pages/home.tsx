@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Social } from "../componets/social";
+import { Social } from "../components/social";
 import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
 import { db } from "../services/firebase-connection";
 import {
